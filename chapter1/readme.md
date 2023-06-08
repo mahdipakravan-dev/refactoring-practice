@@ -12,7 +12,17 @@ amountFor function extracted .
 
 ```kentBeck[BeckSBPP]convention : default name for a paramter includes the type name example : aPerformance```
 
-pref => aPerformance
+perf => aPerformance
 
 thisAmount => result
 
+#### remove play in extracted function !
+
+When I’m breaking down a long function, 
+`I like to get rid of variables`like **play**,
+
+```Hint : we can use ReplaceTempWithQuery technique```
+
+play is calculating in every round ```plays[perf.playID]``` , so we can use ReplaceTempWithQuery .
+
+``playFor(aPerformance) return playOfThisPerformance``
