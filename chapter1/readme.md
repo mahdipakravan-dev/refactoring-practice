@@ -26,3 +26,8 @@ When I’m breaking down a long function,
 play is calculating in every round ```plays[perf.playID]``` , so we can use ReplaceTempWithQuery .
 
 ``playFor(aPerformance) return playOfThisPerformance``
+
+### ✅ use query inside function
+```use ChangeFunctionDeclaration technique to change temp to query```
+
+### ✅ extracting volume credits
