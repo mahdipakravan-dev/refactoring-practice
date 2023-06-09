@@ -1,6 +1,5 @@
 export function statement(invoice, plays) {
     let totalAmount = 0
-    let volumeCredits = 0
     let result = `Statement for ${invoice.customer}\n`
     //ChangeFunctionDeclaration
     function usd(aNumber) {
@@ -42,13 +41,24 @@ export function statement(invoice, plays) {
 
         return result
     }
-    for (let perf of invoice.performances) {
-        volumeCredits += volumeCreditsFor(perf)
-
-        result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seat)\n`
-        totalAmount += amountFor(perf)
+    function totalVolumeCredits() {
+        let result = 0;
+        for(let perf of invoice.performances) {
+            result += volumeCreditsFor(perf)
+        }
+        return result;
     }
-    result += `Amount owed is ${usd(totalAmount)}\n`
-    result += `You earned ${volumeCredits} credits\n`
+    function appleSauce() {
+        let totalAmount = 0;
+        for (let perf of invoice.performances) {
+            totalAmount += amountFor(perf)
+        }
+        return totalAmount
+    }
+    for (let perf of invoice.performances) {
+        result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seat)\n`
+    }
+    result += `Amount owed is ${usd(appleSauce())}\n`
+    result += `You earned ${totalVolumeCredits()} credits\n`
     return result
 }
