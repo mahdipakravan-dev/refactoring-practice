@@ -1,5 +1,11 @@
 export function statement(invoice, plays) {
-    let result = `Statement for ${invoice.customer}\n`
+    const statementData = {}
+    statementData.customer = invoice.customer
+    statementData.performances = invoice.performances
+    return renderPlainText(statementData, plays)
+}
+
+function renderPlainText(data , plays) {
     //ChangeFunctionDeclaration
     function usd(aNumber) {
         return new Intl.NumberFormat("en-US",
@@ -42,19 +48,21 @@ export function statement(invoice, plays) {
     }
     function totalVolumeCredits() {
         let result = 0;
-        for(let perf of invoice.performances) {
+        for(let perf of data.performances) {
             result += volumeCreditsFor(perf)
         }
         return result;
     }
     function totalAmount() {
         let result = 0;
-        for (let perf of invoice.performances) {
+        for (let perf of data.performances) {
             result += amountFor(perf)
         }
         return result
     }
-    for (let perf of invoice.performances) {
+
+    let result = `Statement for ${data.customer}\n`
+    for (let perf of data.performances) {
         result += ` ${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience} seat)\n`
     }
     result += `Amount owed is ${usd(totalAmount())}\n`
