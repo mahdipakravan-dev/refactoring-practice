@@ -16,16 +16,17 @@ export function statement(invoice, plays) {
     return renderPlainText(statementData, plays)
 }
 
+//ChangeFunctionDeclaration
+function usd(aNumber) {
+    return new Intl.NumberFormat("en-US",
+        {
+            style: "currency", currency: "USD",
+            minimumFractionDigits: 2
+        }).format(aNumber / 100)
+}
 
-function renderPlainText(data , plays) {
-    //ChangeFunctionDeclaration
-    function usd(aNumber) {
-        return new Intl.NumberFormat("en-US",
-            {
-                style: "currency", currency: "USD",
-                minimumFractionDigits: 2
-            }).format(aNumber / 100)
-    }
+
+function renderPlainText(data) {
     //extracting function
     function amountFor(aPerformance) {
         let result = 0
