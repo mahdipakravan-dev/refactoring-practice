@@ -3,6 +3,7 @@ export function statement(invoice, plays) {
         const result = Object.assign({} , aPerformance);
         result.play = playFor(result)
         result.amount = amountFor(result)
+        result.volumeCredit = volumeCreditsFor(result)
         return result
     }
 
@@ -33,6 +34,13 @@ export function statement(invoice, plays) {
         return result
     }
 
+    function volumeCreditsFor(aPerformance) {
+        let result = Math.max(aPerformance.audience - 30, 0)
+        if ("comedy" === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5)
+
+        return result
+    }
+
     const statementData = {}
     statementData.customer = invoice.customer
     statementData.performances = invoice.performances.map(enrichPerformance)
@@ -51,17 +59,10 @@ function usd(aNumber) {
 
 
 function renderPlainText(data) {
-
-    function volumeCreditsFor(aPerformance) {
-        let result = Math.max(aPerformance.audience - 30, 0)
-        if ("comedy" === aPerformance.play.type) result += Math.floor(aPerformance.audience / 5)
-
-        return result
-    }
     function totalVolumeCredits() {
         let result = 0;
         for(let perf of data.performances) {
-            result += volumeCreditsFor(perf)
+            result += perf.volumeCredit
         }
         return result;
     }
