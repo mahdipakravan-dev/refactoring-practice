@@ -1,6 +1,6 @@
 export function statement(invoice, plays) {
     function enrichPerformance(aPerformance) {
-        const result = Object.assign({} , aPerformance);
+        const result = Object.assign({}, aPerformance);
         result.play = playFor(result)
         result.amount = amountFor(result)
         result.volumeCredit = volumeCreditsFor(result)
@@ -60,18 +60,13 @@ function usd(aNumber) {
 
 function renderPlainText(data) {
     function totalVolumeCredits() {
-        let result = 0;
-        for(let perf of data.performances) {
-            result += perf.volumeCredit
-        }
-        return result;
+        return data.performances.reduce(
+            (total, aPerformance) => total + aPerformance.volumeCredit, 0)
     }
+
     function totalAmount() {
-        let result = 0;
-        for (let perf of data.performances) {
-            result += perf.amount
-        }
-        return result
+        return data.performances.reduce(
+            (amount, aPerformance) => amount + aPerformance.amount, 0)
     }
 
     let result = `Statement for ${data.customer}\n`
